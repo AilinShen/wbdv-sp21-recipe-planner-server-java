@@ -40,3 +40,4 @@ hs_err_pid*
 .env
 .properties
 .yamlsrc/main/resources/application.yaml
+src/main/resources/application.yaml
