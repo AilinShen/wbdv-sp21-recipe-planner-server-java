@@ -1,8 +1,7 @@
 spring:
   datasource:
+    maxActive: 3
     url: ${JAWSDB_URL}
-    username: ${JAWSDB_USERNAME}
-    password: ${JAWSDB_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
