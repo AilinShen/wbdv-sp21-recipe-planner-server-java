@@ -1,9 +1,9 @@
 spring:
   datasource:
     maxActive: 3
-    url: jdbc:mysql://${JAWSDB_HOST}:3306/hdhn8g6wb6llphiw?serverTimezone=UTC
-    username: ${JAWSDB_USERNAME}
-    password: ${JAWSDB_PASSWORD}
+    url: jdbc:mysql://pxukqohrckdfo4ty.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/hdhn8g6wb6llphiw?serverTimezone=UTC
+    username: j8d52u6sb914sdbm
+    password: s43s9u9ofvg2qtro
     hikari:
       connectionTimeout: 30000
       idleTimeout: 600000

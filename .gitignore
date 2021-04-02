@@ -39,4 +39,4 @@ hs_err_pid*
 *.ipr
 .env
 .properties
-.yaml
+.yamlsrc/main/resources/application.yaml
