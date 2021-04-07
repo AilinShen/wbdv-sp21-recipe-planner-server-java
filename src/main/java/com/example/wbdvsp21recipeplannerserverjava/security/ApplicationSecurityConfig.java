@@ -4,7 +4,7 @@ package com.example.wbdvsp21recipeplannerserverjava.security;
 import com.example.wbdvsp21recipeplannerserverjava.auth.JwtTokenFilter;
 import com.example.wbdvsp21recipeplannerserverjava.auth.JwtUsernameAndPasswordAuthenticationFilter;
 import com.example.wbdvsp21recipeplannerserverjava.jwt.JwtConfig;
-import com.example.wbdvsp21recipeplannerserverjava.jwt.JwtSecretKey;
+import com.example.wbdvsp21recipeplannerserverjava.models.UserRole;
 import com.example.wbdvsp21recipeplannerserverjava.services.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +13,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.crypto.SecretKey;
 
@@ -30,7 +28,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public ApplicationSecurityConfig(ApplicationUserService applicationUserService,
                                      JwtConfig jwtConfig,
-                                     SecretKey secretKey){
+                                     SecretKey secretKey) {
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
         this.applicationUserService = applicationUserService;
@@ -44,10 +42,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .sessionManagement()
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), applicationUserService,jwtConfig, secretKey))
+                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), applicationUserService, jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenFilter(applicationUserService, secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/hello").permitAll()
+                .antMatchers("/creator").hasAnyRole(UserRole.CREATOR.toString())
+                .antMatchers("/shopper").hasAnyRole(UserRole.SHOPPER.toString())
                 .anyRequest()
                 .authenticated();
     }
