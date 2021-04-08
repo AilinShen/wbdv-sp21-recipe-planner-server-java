@@ -1,13 +1,16 @@
 package com.example.wbdvsp21recipeplannerserverjava.controllers;
 
+import com.example.wbdvsp21recipeplannerserverjava.models.Recipe;
 import com.example.wbdvsp21recipeplannerserverjava.models.User;
 import com.example.wbdvsp21recipeplannerserverjava.services.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserControllers {
 
     @Autowired
@@ -15,6 +18,11 @@ public class UserControllers {
 
     @Autowired
     ApplicationUserService userService;
+
+    @GetMapping("/users")
+    public List<User> findAllUsers(){
+        return userService.findAllUsers();
+    }
 
     @GetMapping("/shopper")
     public String shopper() {
