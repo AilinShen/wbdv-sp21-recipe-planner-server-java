@@ -49,4 +49,6 @@ public class ApplicationUserService implements UserDetailsService {
     public User createUser(User user){
         return userRepository.save(user);
     }
+
+    public List<User> findAllUsers() {return (List<User>) userRepository.findAll();}
 }
