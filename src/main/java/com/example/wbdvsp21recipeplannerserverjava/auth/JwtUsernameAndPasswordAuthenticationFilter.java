@@ -23,6 +23,7 @@ import java.security.Key;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -83,6 +84,19 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+
+
+
+        HashMap<String, String> result = new HashMap<String, String>();
+        result.put("Authorization", jwtConfig.getTokenPrefix() + token);
+        result.put("userId", userService.findIdByUsername(authResult.getName()).toString());
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        ObjectMapper objectMapper= new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(result);
+        response.getWriter().write(jsonString);
+        response.getWriter().flush();
 
     }
 }

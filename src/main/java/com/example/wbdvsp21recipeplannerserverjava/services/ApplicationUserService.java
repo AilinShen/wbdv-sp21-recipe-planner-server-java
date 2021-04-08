@@ -51,4 +51,6 @@ public class ApplicationUserService implements UserDetailsService {
     }
 
     public List<User> findAllUsers() {return (List<User>) userRepository.findAll();}
+
+    public Integer findIdByUsername(String name){return userRepository.findIdByUsername(name); }
 }
