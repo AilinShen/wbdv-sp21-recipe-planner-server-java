@@ -19,7 +19,7 @@ public class UserControllers {
     @Autowired
     ApplicationUserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/api/users")
     public List<User> findAllUsers(){
         return userService.findAllUsers();
     }
