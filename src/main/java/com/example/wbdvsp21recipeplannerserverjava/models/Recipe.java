@@ -1,45 +1,61 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name="recipes")
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String apiRecipeId;
+    private String id;
+    private Integer userId;
     private String title;
     private String ingredients;
     private String directions;
     private Integer score;
+    private String imageUrl;
 
     public Recipe() {
     }
 
-    public Recipe(String apiRecipeId, String title, String ingredients, String directions, Integer score) {
-        this.apiRecipeId = apiRecipeId;
+    public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String imageUrl) {
+        this.id = UUID.randomUUID().toString().replace("-", "");
+        this.userId = userId;
         this.title = title;
         this.ingredients = ingredients;
         this.directions = directions;
         this.score = score;
+        this.imageUrl = imageUrl;
     }
 
-    public Integer getId() {
+    public void setRecipeUniqueId(){
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        this.setId("rcp_"+ uuid);
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getApiRecipeId() {
-        return apiRecipeId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setApiRecipeId(String apiRecipeId) {
-        this.apiRecipeId = apiRecipeId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getTitle() {
