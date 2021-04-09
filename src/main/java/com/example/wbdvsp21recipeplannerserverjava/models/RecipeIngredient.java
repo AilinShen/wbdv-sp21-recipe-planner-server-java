@@ -1,5 +1,7 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,15 +13,44 @@ public class RecipeIngredient {
     private Integer id;
     private Integer recipeId;
     private String name;
-    private String quantity;
+    private Integer amount;
+    private String unit;
+
+//    @ManyToOne
+//    @JsonIgnore
+//    private Recipe recipe;
+
+//    {
+//        "recipeId": "rep_123",
+//        "name": "cocoa",
+//        "amount": "1",
+//        "unit": "cup"
+//    }
 
     public RecipeIngredient() {
     }
 
-    public RecipeIngredient(Integer recipeId, String name, String quantity) {
+    public RecipeIngredient(Integer recipeId, String name, Integer amount, String unit) {
         this.recipeId = recipeId;
         this.name = name;
-        this.quantity = quantity;
+        this.amount = amount;
+        this.unit = unit;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public String getName() {
@@ -28,14 +59,6 @@ public class RecipeIngredient {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
     }
 
     public Integer getId() {
