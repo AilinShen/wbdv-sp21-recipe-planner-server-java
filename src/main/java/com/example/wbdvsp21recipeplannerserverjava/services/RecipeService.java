@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class RecipeService {
@@ -34,7 +35,13 @@ public class RecipeService {
         }else {
             return -1;
         }
+    }
 
-
+    public Recipe findRecipeById(String id){
+        try {
+            return (Recipe) repository.findById(id).get();
+        }catch (NoSuchElementException e){
+            return null;
+        }
     }
 }
