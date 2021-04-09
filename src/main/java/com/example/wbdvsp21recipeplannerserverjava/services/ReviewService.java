@@ -18,9 +18,4 @@ public class ReviewService {
     }
     public List<Review> findReviewForRecipe(Long recipeId) { return repository.findReviewForRecipe(recipeId);}
     public List<Review> findReviewForUser(Long userId) { return repository.findReviewForUser(userId);}
-
-    public Integer deleteRecipe(Long rid) {
-        repository.deleteById(rid);
-        return 1;
-    }
 }
