@@ -41,12 +41,19 @@ public class RecipeControllers {
         service.deleteRecipeById(id);
     }
 
-    @PostMapping("/api/recipes/{rid}")
+    @PutMapping("/api/recipes/{rid}")
     public Integer updateRecipe(
             @PathVariable("rid") String id,
             @RequestBody Recipe newRecipe
     ){
         return service.updateRecipe( id, newRecipe);
+    }
+
+    @GetMapping("/api/recipes/{rid}")
+    public Recipe findAllRecipeById(
+            @PathVariable("rid") String id
+    ){
+        return service.findRecipeById(id);
     }
 
 }
