@@ -15,6 +15,9 @@ public class RecipeIngredientService {
     @Autowired
     RecipeIngredientRepository repository;
 
+    @Autowired
+    RecipeService recipeService;
+
     public List<RecipeIngredient> findAllRecipeIngredients(){
         return (List<RecipeIngredient>) repository.findAll();
     }
@@ -33,8 +36,16 @@ public class RecipeIngredientService {
         }
     }
 
-    public RecipeIngredient createRecipeIngredient(RecipeIngredient r){
-        return repository.save(r);
+    public RecipeIngredient createRecipeIngredient(String recipeId, RecipeIngredient r){
+        try {
+            Recipe recipe = recipeService.findRecipeById(recipeId);
+            r.setRecipeId(recipeId);
+
+            System.out.println(r);
+            return repository.save(r);
+        }catch (NoSuchElementException e){
+            return null;
+        }
     }
 
     public RecipeIngredient findRecipeIngredientById(String id){
@@ -45,4 +56,8 @@ public class RecipeIngredientService {
         }
     }
 
+    public List<RecipeIngredient> findIngredientsForRecipe(String id){
+        System.out.println(id);
+        return repository.findIngredientsForRecipe(id);
+    }
 }

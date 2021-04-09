@@ -11,14 +11,11 @@ public class RecipeIngredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer recipeId;
     private String name;
     private Integer amount;
     private String unit;
+    private String recipeId;
 
-//    @ManyToOne
-//    @JsonIgnore
-//    private Recipe recipe;
 
 //    {
 //        "recipeId": "rep_123",
@@ -30,11 +27,11 @@ public class RecipeIngredient {
     public RecipeIngredient() {
     }
 
-    public RecipeIngredient(Integer recipeId, String name, Integer amount, String unit) {
-        this.recipeId = recipeId;
+    public RecipeIngredient(String name, Integer amount, String unit, String recipeId) {
         this.name = name;
         this.amount = amount;
         this.unit = unit;
+        this.recipeId = recipeId;
     }
 
     public Integer getAmount() {
@@ -69,14 +66,12 @@ public class RecipeIngredient {
         this.id = id;
     }
 
-    public Integer getRecipeId() {
+    public String getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(Integer recipeId) {
+    public void setRecipeId(String recipeId) {
         this.recipeId = recipeId;
     }
-
-
 }
 

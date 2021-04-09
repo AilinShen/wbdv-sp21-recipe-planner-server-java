@@ -17,8 +17,6 @@ public class Recipe {
     private Integer score;
     private String imageUrl;
 
-//    @OneToMany(mappedBy = "recipe")
-//    private List<RecipeIngredient> recipeIngredients;
 
 
     public Recipe() {

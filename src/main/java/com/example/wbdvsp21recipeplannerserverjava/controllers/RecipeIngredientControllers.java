@@ -9,44 +9,59 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class RecipeIngredientControllers {
 
     @Autowired
     RecipeIngredientService service;
 
-    @GetMapping("/api/recipe-ingredients")
-    public List<RecipeIngredient> findAllRecipeIngredients(){
+    @GetMapping("/api/ingredients")
+    public List<RecipeIngredient> findAllIngredients(){
         return service.findAllRecipeIngredients();
     }
 
-    @DeleteMapping("/api/recipe-ingredients/{id}")
-    public void deleteRecipeIngredient(
+
+    @DeleteMapping("/api/ingredients/{id}")
+    public void deleteIngredient(
             @PathVariable("id") String id
     ){
         service.deleteRecipeIngredientById(id);
     }
 
-    @PutMapping("/api/recipe-ingredients/{id}")
-    public Integer updateRecipeIngredient(
+    @PutMapping("/api/ingredients/{id}")
+    public Integer updateIngredient(
             @PathVariable("id") String id,
             @RequestBody RecipeIngredient r
     ){
        return service.updateRecipeIngredient(id, r);
     }
 
-    @PostMapping("/api/recipe-ingredients")
-    public RecipeIngredient createRecipeIngredient(
-            @RequestBody RecipeIngredient r
-    ){
-        return service.createRecipeIngredient(r);
-    }
-
-    @GetMapping("/api/recipe-ingredients/{id}")
-    public RecipeIngredient updateRecipeIngredient(
+    @GetMapping("/api/ingredients/{id}")
+    public RecipeIngredient findIngredientById(
             @PathVariable("id") String id
     ){
         return service.findRecipeIngredientById(id);
     }
+
+
+    //For each recipe
+
+    @GetMapping("/api/recipes/{recipeId}/ingredients")
+    public List<RecipeIngredient> findIngredientsForRecipe(
+            @PathVariable("recipeId") String recipeId){
+        return service.findIngredientsForRecipe(recipeId);
+    }
+
+
+    @PostMapping("/api/recipes/{rid}/ingredients")
+    public RecipeIngredient createRecipeIngredient(
+            @PathVariable("rid") String recipeId,
+            @RequestBody RecipeIngredient ri
+    ){
+        return service.createRecipeIngredient(recipeId, ri);
+    }
+
+
+
 
 }
