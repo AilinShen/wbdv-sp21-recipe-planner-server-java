@@ -104,4 +104,19 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         response.getWriter().flush();
 
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+
+        HashMap<String, String> result = new HashMap<String, String>();
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        ObjectMapper objectMapper= new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(result);
+        response.getWriter().write(jsonString);
+        response.getWriter().flush();
+    }
 }
