@@ -15,6 +15,10 @@ public class ReviewService {
     public Review CreateReview(Review review) {return repository.save(review);}
     public List<Review> findAllReviews(){
         return (List<Review>) repository.findAll();
+
+    }
+    public List<Review> findReviewForRecipe(Long recipeId) { return repository.findReviewForRecipe(recipeId);}
+    public List<Review> findReviewForUser(Long userId) { return repository.findReviewForUser(userId);}
     }
     public List<Review> findReviewForRecipe(Long recipeId) { return repository.findReviewForRecipe(recipeId);}
     public List<Review> findReviewForUser(Long userId) { return repository.findReviewForUser(userId);}

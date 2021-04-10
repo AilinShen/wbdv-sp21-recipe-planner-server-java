@@ -40,4 +40,5 @@ hs_err_pid*
 .env
 .properties
 *.yml
+application.yml
 
