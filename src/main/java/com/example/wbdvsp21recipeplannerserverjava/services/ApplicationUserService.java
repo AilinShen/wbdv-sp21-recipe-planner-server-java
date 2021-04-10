@@ -53,4 +53,20 @@ public class ApplicationUserService implements UserDetailsService {
     public List<User> findAllUsers() {return (List<User>) userRepository.findAll();}
 
     public Integer findIdByEmail(String name){return userRepository.findIdByEmail(name); }
+
+    public void deleteUserById(String id) {
+        userRepository.deleteById(Integer.parseInt(id));
+    }
+
+    public Integer updateUser(String id, User newUser){
+        Integer userId = Integer.parseInt(id);
+        if (userRepository.existsById(userId)){
+            newUser.setId(userId);
+            userRepository.save(newUser);
+            return 1;
+        }else {
+            return -1;
+        }
+    }
+
 }

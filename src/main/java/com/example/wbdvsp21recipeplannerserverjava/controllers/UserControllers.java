@@ -50,4 +50,19 @@ public class UserControllers {
         return saveUser.getId();
     }
 
+    @PutMapping("/api/users/{uid}")
+    public Integer updateUser(
+            @PathVariable("uid") String id,
+            @RequestBody User newUser
+    ){
+        return userService.updateUser(id, newUser);
+    }
+
+    @DeleteMapping("/api/users/{uid}")
+    public void deleteUser(
+            @PathVariable("uid") String id
+    ){
+        userService.deleteUserById(id);
+    }
+
 }
