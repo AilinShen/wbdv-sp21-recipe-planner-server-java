@@ -111,6 +111,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                               AuthenticationException failed) throws IOException, ServletException {
 
         HashMap<String, String> result = new HashMap<String, String>();
+        result.put("Authorization", "invalid");
 
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
