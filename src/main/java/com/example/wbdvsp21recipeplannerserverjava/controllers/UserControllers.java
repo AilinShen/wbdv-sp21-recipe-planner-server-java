@@ -44,7 +44,7 @@ public class UserControllers {
     public Integer processRegister(@RequestBody User requestUser) {
 
         String encodedPassword = bCryptPasswordEncoder.encode(requestUser.getPassword());
-        User user = new User(requestUser.getUsername(), encodedPassword, requestUser.getRole());
+        User user = new User(requestUser.getEmail(), requestUser.getName(), encodedPassword, requestUser.getRole());
 
         User saveUser = userService.createUser(user);
         return saveUser.getId();

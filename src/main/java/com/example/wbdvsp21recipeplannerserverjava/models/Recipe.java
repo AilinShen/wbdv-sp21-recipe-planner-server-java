@@ -1,6 +1,7 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +16,8 @@ public class Recipe {
     private String directions;
     private Integer score;
     private String imageUrl;
+
+
 
     public Recipe() {
     }

@@ -1,5 +1,7 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,17 +11,43 @@ public class RecipeIngredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer recipeId;
     private String name;
-    private String quantity;
+    private Integer amount;
+    private String unit;
+    private String recipeId;
+
+
+//    {
+//        "recipeId": "rep_123",
+//        "name": "cocoa",
+//        "amount": "1",
+//        "unit": "cup"
+//    }
 
     public RecipeIngredient() {
     }
 
-    public RecipeIngredient(Integer recipeId, String name, String quantity) {
-        this.recipeId = recipeId;
+    public RecipeIngredient(String name, Integer amount, String unit, String recipeId) {
         this.name = name;
-        this.quantity = quantity;
+        this.amount = amount;
+        this.unit = unit;
+        this.recipeId = recipeId;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public String getName() {
@@ -30,14 +58,6 @@ public class RecipeIngredient {
         this.name = name;
     }
 
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -46,14 +66,12 @@ public class RecipeIngredient {
         this.id = id;
     }
 
-    public Integer getRecipeId() {
+    public String getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(Integer recipeId) {
+    public void setRecipeId(String recipeId) {
         this.recipeId = recipeId;
     }
-
-
 }
 
