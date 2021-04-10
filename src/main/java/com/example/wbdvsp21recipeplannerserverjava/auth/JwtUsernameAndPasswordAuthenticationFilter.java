@@ -52,9 +52,9 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
              // check whether user and password are correct
             //
-            UserDetails userDetail = userService.loadUserByUsername(authenticationRequest.getUsername());
+            UserDetails userDetail = userService.loadUserByUsername(authenticationRequest.getEmail());
 
-            System.out.println(authenticationRequest.getUsername());
+            System.out.println(authenticationRequest.getEmail());
             System.out.println(authenticationRequest.getPassword());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -75,9 +75,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
+        // change authResult to specific to my user
+
+        ApplicationUserPrincipal userDetail = (ApplicationUserPrincipal) authResult.getPrincipal();
+
+
         String token = Jwts.builder()
                 .setClaims(new HashMap<>())
-                .setSubject(authResult.getName())
+                .setSubject(userDetail.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
                 .signWith(secretKey)
@@ -89,7 +94,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         HashMap<String, String> result = new HashMap<String, String>();
         result.put("Authorization", jwtConfig.getTokenPrefix() + token);
-        result.put("userId", userService.findIdByUsername(authResult.getName()).toString());
+        result.put("userId", userService.findIdByEmail(userDetail.getEmail()).toString());
 
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");

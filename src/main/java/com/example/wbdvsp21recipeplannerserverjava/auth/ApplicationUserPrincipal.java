@@ -12,16 +12,16 @@ public class ApplicationUserPrincipal implements UserDetails {
 
     private final List<? extends GrantedAuthority> grantedAuthorities;
     private final String password;
-    private final String username;
+    private final String email;
     private final boolean isAccountNonExpired;
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
 
-    public ApplicationUserPrincipal(List<? extends GrantedAuthority> grantedAuthorities, String username, String password) {
+    public ApplicationUserPrincipal(List<? extends GrantedAuthority> grantedAuthorities, String email, String password) {
         this.grantedAuthorities = grantedAuthorities;
         this.password = password;
-        this.username = username;
+        this.email = email;
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
@@ -29,7 +29,7 @@ public class ApplicationUserPrincipal implements UserDetails {
     }
 
     public ApplicationUserPrincipal(List<? extends GrantedAuthority> grantedAuthorities,
-                                    String username,
+                                    String email,
                                     String password,
                                     boolean isAccountNonExpired,
                                     boolean isAccountNonLocked,
@@ -38,7 +38,7 @@ public class ApplicationUserPrincipal implements UserDetails {
 
         this.grantedAuthorities = grantedAuthorities;
         this.password = password;
-        this.username = username;
+        this.email = email;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
@@ -58,8 +58,10 @@ public class ApplicationUserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
+
+    public String getEmail() { return this.email; }
 
     @Override
     public boolean isAccountNonExpired() {
