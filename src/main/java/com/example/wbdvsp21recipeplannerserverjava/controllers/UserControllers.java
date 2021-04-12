@@ -2,6 +2,7 @@ package com.example.wbdvsp21recipeplannerserverjava.controllers;
 
 import com.example.wbdvsp21recipeplannerserverjava.models.Recipe;
 import com.example.wbdvsp21recipeplannerserverjava.models.User;
+import com.example.wbdvsp21recipeplannerserverjava.security.ApiResponse;
 import com.example.wbdvsp21recipeplannerserverjava.services.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,13 +42,16 @@ public class UserControllers {
     //    "role": "SHOPPER"
     //}
     @PostMapping(value = "/register")
-    public Integer processRegister(@RequestBody User requestUser) {
+    public ApiResponse processRegister(@RequestBody User requestUser) {
 
-        String encodedPassword = bCryptPasswordEncoder.encode(requestUser.getPassword());
-        User user = new User(requestUser.getEmail(), requestUser.getName(), encodedPassword, requestUser.getRole());
+        if (userService.findIdByEmail(requestUser.getEmail()) == null){
+            String encodedPassword = bCryptPasswordEncoder.encode(requestUser.getPassword());
+            User user = new User(requestUser.getEmail(), requestUser.getName(), encodedPassword, requestUser.getRole());
+            User saveUser = userService.createUser(user);
 
-        User saveUser = userService.createUser(user);
-        return saveUser.getId();
+            return new ApiResponse(200, "Success");
+        }
+        return new ApiResponse(403, "Email already exists");
     }
 
     @PutMapping("/api/users/{uid}")

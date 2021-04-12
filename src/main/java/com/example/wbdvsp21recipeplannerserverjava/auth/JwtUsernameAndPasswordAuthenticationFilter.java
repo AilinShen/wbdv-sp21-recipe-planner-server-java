@@ -2,6 +2,7 @@ package com.example.wbdvsp21recipeplannerserverjava.auth;
 
 import com.example.wbdvsp21recipeplannerserverjava.jwt.JwtConfig;
 import com.example.wbdvsp21recipeplannerserverjava.jwt.JwtSecretKey;
+import com.example.wbdvsp21recipeplannerserverjava.security.ApiResponse;
 import com.example.wbdvsp21recipeplannerserverjava.services.ApplicationUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
@@ -92,12 +93,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
 
 
-        HashMap<String, String> result = new HashMap<String, String>();
-        result.put("Authorization", jwtConfig.getTokenPrefix() + token);
-        result.put("userId", userService.findIdByEmail(userDetail.getEmail()).toString());
+//        HashMap<String, String> result = new HashMap<String, String>();
+//        result.put("status", "200");
+//        result.put("Authorization", jwtConfig.getTokenPrefix() + token);
+//        result.put("userId", userService.findIdByEmail(userDetail.getEmail()).toString());
+        UserAuthenticationResponse result = new UserAuthenticationResponse(200,
+                jwtConfig.getTokenPrefix() + token,
+                userService.findIdByEmail(userDetail.getEmail()).toString());
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("utf-8");
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("utf-8");
         ObjectMapper objectMapper= new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(result);
         response.getWriter().write(jsonString);
@@ -110,11 +115,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                               HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
 
-        HashMap<String, String> result = new HashMap<String, String>();
-        result.put("Authorization", "invalid");
+        UserAuthenticationResponse result = new UserAuthenticationResponse(403,
+                "", "", "Invalid password");
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("utf-8");
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("utf-8");
         ObjectMapper objectMapper= new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(result);
         response.getWriter().write(jsonString);
