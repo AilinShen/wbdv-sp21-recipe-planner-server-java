@@ -15,18 +15,18 @@ public class CartRecipeService {
         return repository.save(recipe);
     }
 
-    public List<CartRecipe> findRecipesForCart(String cartId){
+    public List<CartRecipe> findRecipesForCart(Integer cartId){
         return repository.findRecipesForCart(cartId);
     }
 
-    public CartRecipe findCartRecipeById(String cartRecipeId){
+    public CartRecipe findCartRecipeById(Integer cartRecipeId){
         return repository.findCartRecipeById(cartRecipeId);
     }
 
-    public Integer updateCartRecipe(String cartRecipeId, CartRecipe newRecipe){
+    public Integer updateCartRecipe(Integer cartRecipeId, CartRecipe newRecipe){
         CartRecipe original = findCartRecipeById(cartRecipeId);
         original.setCartId(newRecipe.getCartId());
-        original.setRecipeId(newRecipe.getCartId());
+        original.setRecipeId(newRecipe.getRecipeId());
         repository.save(original);
         return 1;
     }

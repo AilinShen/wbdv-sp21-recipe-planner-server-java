@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 public interface CartRepository
 extends CrudRepository<Cart, String>{
 
-    @Query(value="SELECT * FROM carts WHERE userId=:uid", nativeQuery = true)
+    @Query(value="SELECT * FROM carts WHERE user_id=:uid", nativeQuery = true)
     public Cart findCartForUser(@Param("uid") Integer userId);
 
-    @Query(value="SELECT * FROM carts WHERE id=:cid", nativeQuery = true)
+    @Query(value="SELECT * FROM carts WHERE cart_id=:cid", nativeQuery = true)
     public Cart findCartById(@Param("cid") String cartId);
 }
