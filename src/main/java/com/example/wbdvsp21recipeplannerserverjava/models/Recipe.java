@@ -1,6 +1,7 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -8,6 +9,7 @@ import java.util.UUID;
 public class Recipe {
 
     @Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private Integer userId;
     private String title;
@@ -16,11 +18,14 @@ public class Recipe {
     private Integer score;
     private String imageUrl;
 
+
+
     public Recipe() {
+        setRecipeUniqueId();
     }
 
     public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String imageUrl) {
-        this.id = UUID.randomUUID().toString().replace("-", "");
+        setRecipeUniqueId();
         this.userId = userId;
         this.title = title;
         this.ingredients = ingredients;

@@ -30,6 +30,7 @@ public class RecipeService {
     public Integer updateRecipe(String recipeId, Recipe newRecipe){
         if (repository.existsById(recipeId)){
             newRecipe.setId(recipeId);
+            System.out.println(newRecipe.getId());
             repository.save(newRecipe);
             return 1;
         }else {

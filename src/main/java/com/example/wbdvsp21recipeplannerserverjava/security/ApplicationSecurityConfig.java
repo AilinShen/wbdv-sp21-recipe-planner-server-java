@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -33,23 +34,26 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final ApplicationUserService applicationUserService;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
+    private final RestAccessDeniedHandler accessDeniedHandler;
+    private final RestAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
     public ApplicationSecurityConfig(ApplicationUserService applicationUserService,
                                      JwtConfig jwtConfig,
-                                     SecretKey secretKey) {
+                                     SecretKey secretKey,
+                                     RestAccessDeniedHandler accessDeniedHandler,
+                                     RestAuthenticationEntryPoint unauthorizedHandler) {
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
         this.applicationUserService = applicationUserService;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.unauthorizedHandler = unauthorizedHandler;
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
                 .cors(withDefaults())
                 .csrf().disable()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), applicationUserService, jwtConfig, secretKey))
@@ -57,13 +61,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/*/*").permitAll()
+                .antMatchers("/api/**/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/hello").permitAll()
                 .antMatchers("/creator").hasAnyRole(UserRole.CREATOR.toString())
                 .antMatchers("/shopper").hasAnyRole(UserRole.SHOPPER.toString())
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
