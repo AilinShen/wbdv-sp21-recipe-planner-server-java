@@ -7,15 +7,25 @@ import com.example.wbdvsp21recipeplannerserverjava.jwt.JwtConfig;
 import com.example.wbdvsp21recipeplannerserverjava.models.UserRole;
 import com.example.wbdvsp21recipeplannerserverjava.services.ApplicationUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.SecretKey;
+import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @EnableWebSecurity
@@ -24,35 +34,46 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final ApplicationUserService applicationUserService;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
+    private final RestAccessDeniedHandler accessDeniedHandler;
+    private final RestAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
     public ApplicationSecurityConfig(ApplicationUserService applicationUserService,
                                      JwtConfig jwtConfig,
-                                     SecretKey secretKey) {
+                                     SecretKey secretKey,
+                                     RestAccessDeniedHandler accessDeniedHandler,
+                                     RestAuthenticationEntryPoint unauthorizedHandler) {
         this.jwtConfig = jwtConfig;
         this.secretKey = secretKey;
         this.applicationUserService = applicationUserService;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.unauthorizedHandler = unauthorizedHandler;
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors(withDefaults())
                 .csrf().disable()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-                .cors().and()
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), applicationUserService, jwtConfig, secretKey))
                 .addFilterAfter(new JwtTokenFilter(applicationUserService, secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/**/**").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/hello").permitAll()
                 .antMatchers("/creator").hasAnyRole(UserRole.CREATOR.toString())
                 .antMatchers("/shopper").hasAnyRole(UserRole.SHOPPER.toString())
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
@@ -74,5 +95,17 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
 }

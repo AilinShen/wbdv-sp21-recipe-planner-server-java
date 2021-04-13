@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface CartRepository
 extends CrudRepository<Cart, String>{
+
     @Query(value="SELECT * FROM carts WHERE userId=:uid", nativeQuery = true)
     public Cart findCartForUser(@Param("uid") Integer userId);
 

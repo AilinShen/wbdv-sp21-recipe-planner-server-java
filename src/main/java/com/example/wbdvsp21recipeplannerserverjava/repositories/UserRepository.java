@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    @Query(value="SELECT * FROM users WHERE username=:name", nativeQuery = true)
-    public List<User> findUserByUserName(String name);
+    @Query(value="SELECT * FROM users WHERE email=:e", nativeQuery = true)
+    public List<User> findUserByEmail(String e);
+
+    @Query(value="SELECT id FROM users WHERE email=:e", nativeQuery = true)
+    public Integer findIdByEmail(String e);
 
 }
