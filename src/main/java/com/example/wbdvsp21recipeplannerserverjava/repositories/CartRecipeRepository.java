@@ -9,9 +9,9 @@ import java.util.List;
 public interface CartRecipeRepository
 extends CrudRepository<CartRecipe, String>{
 
-    @Query(value="SELECT * FROM cart_recipes WHERE cartId=:cid", nativeQuery = true)
-    public List<CartRecipe> findRecipesForCart(@Param("cid") String cartId);
+    @Query(value="SELECT * FROM cart_recipes WHERE cart_id=:cid", nativeQuery = true)
+    public List<CartRecipe> findRecipesForCart(@Param("cid") Integer cartId);
 
-    @Query(value="SELECT * FROM cart_recipes WHERE id=:cid", nativeQuery = true)
-    public CartRecipe findCartRecipeById(@Param("cid") String cartRecipeId);
+    @Query(value="SELECT * FROM cart_recipes WHERE cart_recipe_id=:cid", nativeQuery = true)
+    public CartRecipe findCartRecipeById(@Param("cid") Integer cartRecipeId);
 }

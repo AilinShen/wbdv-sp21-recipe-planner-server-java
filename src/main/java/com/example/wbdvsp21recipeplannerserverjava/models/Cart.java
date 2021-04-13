@@ -1,7 +1,6 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name="carts")
@@ -9,29 +8,22 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer cartId;
     private Integer userId;
 
-    public Cart(){
-        setCartUniqueId();
-    }
+    public Cart(){}
 
     public Cart(Integer userId) {
-        setCartUniqueId();
+        //setCartUniqueId();
         this.userId = userId;
     }
 
-    public void setCartUniqueId(){
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        this.setId("cart_"+ uuid);
+    public Integer getId() {
+        return cartId;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setId(Integer id) {
+        this.cartId = id;
     }
 
     public Integer getUserId() {
