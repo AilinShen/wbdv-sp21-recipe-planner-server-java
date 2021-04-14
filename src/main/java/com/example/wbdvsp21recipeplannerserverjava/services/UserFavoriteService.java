@@ -21,8 +21,16 @@ public class UserFavoriteService {
     public List<UserFavorites> findFavoritesForUser(Long userId){
         return repository.findFavoritesForUser(userId);
     }
+    public UserFavorites findFavorites(Long userId, Long recipeId){
+        UserFavorites test = repository.findFavorites(userId,recipeId);
+        if(test != null){
+            return test;
+        }else{
+            return new UserFavorites(-1L,-1L, -1L);
+        }
+    }
     public Integer deleteFavorites(Long Id) {
-        repository.deleteFavorites(Id);
+        repository.deleteById(Id);
         return 1;
     }
 }

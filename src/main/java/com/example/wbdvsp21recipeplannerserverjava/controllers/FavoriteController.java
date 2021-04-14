@@ -3,6 +3,7 @@ package com.example.wbdvsp21recipeplannerserverjava.controllers;
 import com.example.wbdvsp21recipeplannerserverjava.models.UserFavorites;
 import com.example.wbdvsp21recipeplannerserverjava.services.UserFavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +19,14 @@ public class FavoriteController {
         return service.findAllFavorites();
     }
 
-    @PostMapping("/api/users/{uid}/favorites")
+    @PostMapping("/api/users/{uid}/recipe/{rid}/favorite")
     public UserFavorites createFavorite(
             @PathVariable("rid") Long recipeId,
+            @PathVariable("uid") Long userId,
             @RequestBody UserFavorites fav
     ) {
         fav.setRecipeId(recipeId);
+        fav.setUserId(userId);
         return service.createFavorites(fav);
     }
 
@@ -34,8 +37,16 @@ public class FavoriteController {
         return service.findFavoritesForUser(userId);
     }
 
-    @DeleteMapping("api/favorites/{fid}")
-    public Integer deleteFavorites(@PathVariable("fid") Long id) {
-        return service.deleteFavorites(id);
+    @GetMapping("/api/users/{uid}/recipe/{rid}/favorite")
+    public UserFavorites findFavorites(
+            @PathVariable("uid") Long userId,
+            @PathVariable("rid") Long recipeId
+    ) {
+        return service.findFavorites(userId, recipeId);
+    }
+
+    @DeleteMapping("/api/favorites/{fId}")
+    public Integer deleteFavorites(@PathVariable("fId") Long Id) {
+        return service.deleteFavorites(Id);
     }
 }
