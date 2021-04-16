@@ -17,6 +17,7 @@ public class Recipe {
     private String directions;
     private Integer score;
     private String imageUrl;
+    private Integer time;
 
 
 
@@ -24,7 +25,7 @@ public class Recipe {
         setRecipeUniqueId();
     }
 
-    public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String imageUrl) {
+    public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String imageUrl, Integer time) {
         setRecipeUniqueId();
         this.userId = userId;
         this.title = title;
@@ -32,6 +33,7 @@ public class Recipe {
         this.directions = directions;
         this.score = score;
         this.imageUrl = imageUrl;
+        this.time = time;
     }
 
     public void setRecipeUniqueId(){
@@ -93,5 +95,13 @@ public class Recipe {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
     }
 }
