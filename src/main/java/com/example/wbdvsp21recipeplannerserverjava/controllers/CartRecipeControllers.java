@@ -34,7 +34,7 @@ public class CartRecipeControllers {
         return cartRecipeService.createRecipeForCart(recipe);
     }
 
-    @PutMapping("/api/cart/{uid/recipes/{rid}")
+    @PutMapping("/api/cart/{uid}/recipes/{rid}")
     public Integer updateRecipe(@PathVariable("uid") Integer userId,
                                 @PathVariable("rid") Integer cartRecipeId,
                                 @RequestBody CartRecipe recipe){
@@ -44,7 +44,7 @@ public class CartRecipeControllers {
         return cartRecipeService.updateCartRecipe(cartRecipeId, original);
     }
 
-    @DeleteMapping("/api/cart/{uid/recipes/{rid}")
+    @DeleteMapping("/api/cart/{uid}/recipes/{rid}")
     public Integer deleteRecipe(@PathVariable("uid") Integer userId,
                                 @PathVariable("rid") String cartRecipeId){
         return cartRecipeService.deleteCartRecipe(cartRecipeId);
