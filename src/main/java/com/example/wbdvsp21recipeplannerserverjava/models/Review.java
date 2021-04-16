@@ -11,6 +11,15 @@ public class Review {
     private Long userId;
     private Long recipeId;
     private String text;
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Review() {
     }

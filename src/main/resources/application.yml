@@ -4,6 +4,7 @@ spring:
     url: jdbc:mysql://${JAWSDB_HOST}:3306/hdhn8g6wb6llphiw?serverTimezone=UTC
     username: ${JAWSDB_USERNAME}
     password: ${JAWSDB_PASSWORD}
+
     hikari:
       connectionTimeout: 30000
       idleTimeout: 600000
