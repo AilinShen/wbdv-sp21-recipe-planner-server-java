@@ -5,12 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface CartRepository
-extends CrudRepository<Cart, String>{
+extends CrudRepository<Cart, Integer>{
 
     @Query(value="SELECT * FROM carts WHERE user_id=:uid", nativeQuery = true)
-    public Cart findCartForUser(@Param("uid") Integer userId);
+    List<Cart> findCartForUser(@Param("uid") Integer userId);
 
-    @Query(value="SELECT * FROM carts WHERE cart_id=:cid", nativeQuery = true)
-    public Cart findCartById(@Param("cid") String cartId);
 }
