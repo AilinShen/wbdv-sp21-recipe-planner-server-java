@@ -26,4 +26,3 @@ application:
     secretKey: wbdvprojectrecipeapplicationserverailinxinyueross
     tokenPrefix: Bearer
     tokenExpirationAfterDays: 1
-
