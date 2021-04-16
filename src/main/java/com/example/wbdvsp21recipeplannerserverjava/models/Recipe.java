@@ -16,8 +16,8 @@ public class Recipe {
     private String ingredients;
     private String directions;
     private Integer score;
-    private String imageUrl;
-    private Integer time;
+    private String image;
+    private Integer readyInMinutes;
 
 
 
@@ -25,15 +25,15 @@ public class Recipe {
         setRecipeUniqueId();
     }
 
-    public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String imageUrl, Integer time) {
+    public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String image, Integer readyInMinutes) {
         setRecipeUniqueId();
         this.userId = userId;
         this.title = title;
         this.ingredients = ingredients;
         this.directions = directions;
         this.score = score;
-        this.imageUrl = imageUrl;
-        this.time = time;
+        this.image = image;
+        this.readyInMinutes = readyInMinutes;
     }
 
     public void setRecipeUniqueId(){
@@ -57,13 +57,6 @@ public class Recipe {
         this.userId = userId;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getTitle() {
         return title;
@@ -97,11 +90,19 @@ public class Recipe {
         this.score = score;
     }
 
-    public Integer getTime() {
-        return time;
+    public String getImage() {
+        return image;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Integer getReadyInMinutes() {
+        return readyInMinutes;
+    }
+
+    public void setReadyInMinutes(Integer readyInMinutes) {
+        this.readyInMinutes = readyInMinutes;
     }
 }
