@@ -25,23 +25,13 @@ public class CartRecipeControllers {
         return cartRecipeService.findRecipesForCart(cart.getId());
     }
 
-    @PostMapping("/api/cart/{uid}/recipes/{rid}")
+    @PostMapping("/api/cart/{uid}/recipes")
     public CartRecipe createRecipe(@PathVariable("uid") Integer userId,
                                    @RequestBody CartRecipe recipe){
         Cart cart = cartService.findCartForUser(userId);
         recipe.setCartId(cart.getId());
         //recipe.setCartRecipeUniqueId();
         return cartRecipeService.createRecipeForCart(recipe);
-    }
-
-    @PutMapping("/api/cart/{uid}/recipes/{rid}")
-    public Integer updateRecipe(@PathVariable("uid") Integer userId,
-                                @PathVariable("rid") Integer cartRecipeId,
-                                @RequestBody CartRecipe recipe){
-        CartRecipe original = cartRecipeService.findCartRecipeById(cartRecipeId);
-        original.setCartId(recipe.getCartId());
-        original.setRecipeId(recipe.getRecipeId());
-        return cartRecipeService.updateCartRecipe(cartRecipeId, original);
     }
 
     @DeleteMapping("/api/cart/{uid}/recipes/{rid}")

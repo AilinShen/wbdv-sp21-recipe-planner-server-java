@@ -23,13 +23,6 @@ public class CartRecipeService {
         return repository.findCartRecipeById(cartRecipeId);
     }
 
-    public Integer updateCartRecipe(Integer cartRecipeId, CartRecipe newRecipe){
-        CartRecipe original = findCartRecipeById(cartRecipeId);
-        original.setCartId(newRecipe.getCartId());
-        original.setRecipeId(newRecipe.getRecipeId());
-        repository.save(original);
-        return 1;
-    }
 
     public Integer deleteCartRecipe(String cartRecipeId){
         repository.deleteById(cartRecipeId);
