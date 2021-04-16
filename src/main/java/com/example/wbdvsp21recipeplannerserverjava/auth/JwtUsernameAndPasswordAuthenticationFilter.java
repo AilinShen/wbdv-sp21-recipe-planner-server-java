@@ -97,9 +97,10 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 //        result.put("status", "200");
 //        result.put("Authorization", jwtConfig.getTokenPrefix() + token);
 //        result.put("userId", userService.findIdByEmail(userDetail.getEmail()).toString());
-        UserAuthenticationResponse result = new UserAuthenticationResponse(200,
-                jwtConfig.getTokenPrefix() + token,
-                userService.findIdByEmail(userDetail.getEmail()).toString());
+        UserAuthenticationResponse result = new UserAuthenticationResponse(200, jwtConfig.getTokenPrefix() + token,
+                userService.findIdByEmail(userDetail.getEmail()).toString(),
+                userService.findNameByEmail(userDetail.getEmail()),
+                "success");
 
 //        response.setContentType("application/json");
 //        response.setCharacterEncoding("utf-8");
@@ -116,7 +117,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                               AuthenticationException failed) throws IOException, ServletException {
 
         UserAuthenticationResponse result = new UserAuthenticationResponse(403,
-                "", "", "Invalid password");
+                "", "", "", "Invalid password");
 
 //        response.setContentType("application/json");
 //        response.setCharacterEncoding("utf-8");

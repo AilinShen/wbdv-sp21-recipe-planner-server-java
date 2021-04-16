@@ -6,17 +6,20 @@ public class UserAuthenticationResponse {
     private String authorization;
     private String userId;
     private String message;
+    private String username;
 
-    public UserAuthenticationResponse(int status, String authorization, String userId) {
+    public UserAuthenticationResponse(int status, String authorization, String userId, String name) {
         this.status = status;
         this.authorization = authorization;
         this.userId = userId;
+        this.username = name;
     }
 
-    public UserAuthenticationResponse(int status, String authorization, String userId, String message) {
+    public UserAuthenticationResponse(int status, String authorization, String userId, String name, String message) {
         this.status = status;
         this.authorization = authorization;
         this.userId = userId;
+        this.username = name;
         this.message = message;
     }
 
@@ -50,5 +53,13 @@ public class UserAuthenticationResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

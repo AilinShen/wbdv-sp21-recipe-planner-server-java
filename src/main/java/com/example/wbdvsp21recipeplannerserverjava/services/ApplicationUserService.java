@@ -54,6 +54,8 @@ public class ApplicationUserService implements UserDetailsService {
 
     public Integer findIdByEmail(String name){return userRepository.findIdByEmail(name); }
 
+    public String findNameByEmail(String name){return userRepository.findNameByEmail(name); }
+
     public void deleteUserById(String id) {
         userRepository.deleteById(Integer.parseInt(id));
     }

@@ -14,4 +14,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value="SELECT id FROM users WHERE email=:e", nativeQuery = true)
     public Integer findIdByEmail(String e);
 
+    @Query(value="SELECT name FROM users WHERE email=:e", nativeQuery = true)
+    public String findNameByEmail(String e);
+
 }
