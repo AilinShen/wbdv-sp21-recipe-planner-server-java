@@ -45,4 +45,8 @@ public class RecipeService {
             return null;
         }
     }
+
+    public List<Recipe> findRecipesForUser(String userId){
+        return repository.findRecipeForUser(Integer.parseInt(userId));
+    }
 }
