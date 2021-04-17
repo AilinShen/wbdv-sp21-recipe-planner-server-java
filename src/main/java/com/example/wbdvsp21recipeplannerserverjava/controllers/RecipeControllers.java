@@ -58,7 +58,7 @@ public class RecipeControllers {
 
     @GetMapping("/api/users/{uid}/recipes")
     public List<Recipe> findRecipeForUser(
-            @PathVariable("uid") String userId
+            @PathVariable("uid") Integer userId
     ) {
         return service.findRecipesForUser(userId);
     }

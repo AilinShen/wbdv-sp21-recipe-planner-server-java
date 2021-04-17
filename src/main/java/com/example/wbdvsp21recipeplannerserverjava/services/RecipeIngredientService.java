@@ -57,7 +57,6 @@ public class RecipeIngredientService {
     }
 
     public List<RecipeIngredient> findIngredientsForRecipe(String id){
-        System.out.println(id);
         return repository.findIngredientsForRecipe(id);
     }
 }

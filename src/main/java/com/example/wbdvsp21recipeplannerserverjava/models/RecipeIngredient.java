@@ -1,6 +1,7 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import javax.persistence.*;
 
@@ -72,6 +73,11 @@ public class RecipeIngredient {
 
     public void setRecipeId(String recipeId) {
         this.recipeId = recipeId;
+    }
+
+    public String toString(){
+        return "{\"id\": \"" + this.id + "\", \"recipeId\": \"" + this.recipeId + "\", \"name\": \"" +
+                this.name + "\", \"amount\": \"" + this.amount + "\", \"unit\": \"" + this.unit + "\" }";
     }
 }
 
