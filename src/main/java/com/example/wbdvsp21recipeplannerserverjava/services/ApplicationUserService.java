@@ -56,6 +56,8 @@ public class ApplicationUserService implements UserDetailsService {
 
     public String findNameByEmail(String name){return userRepository.findNameByEmail(name); }
 
+    public List<User> findUserByEmail(String name){return userRepository.findUserByEmail(name); }
+
     public void deleteUserById(String id) {
         userRepository.deleteById(Integer.parseInt(id));
     }
