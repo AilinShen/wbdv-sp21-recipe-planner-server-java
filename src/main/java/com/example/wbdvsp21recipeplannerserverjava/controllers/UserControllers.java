@@ -25,6 +25,11 @@ public class UserControllers {
         return userService.findAllUsers();
     }
 
+    @GetMapping("/api/users/{uid}")
+    public User findUserById( @PathVariable("uid") Integer id){
+        return userService.findUserById(id);
+    }
+
     @GetMapping("/shopper")
     public String shopper() {
         return "SHOPPER: Successfully logged in";
@@ -56,7 +61,7 @@ public class UserControllers {
 
     @PutMapping("/api/users/{uid}")
     public Integer updateUser(
-            @PathVariable("uid") String id,
+            @PathVariable("uid") Integer id,
             @RequestBody User newUser
     ){
         return userService.updateUser(id, newUser);
@@ -64,7 +69,7 @@ public class UserControllers {
 
     @DeleteMapping("/api/users/{uid}")
     public void deleteUser(
-            @PathVariable("uid") String id
+            @PathVariable("uid") Integer id
     ){
         userService.deleteUserById(id);
     }
