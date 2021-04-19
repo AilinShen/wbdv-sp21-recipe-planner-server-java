@@ -2,6 +2,7 @@ package com.example.wbdvsp21recipeplannerserverjava.auth;
 
 import com.example.wbdvsp21recipeplannerserverjava.jwt.JwtConfig;
 import com.example.wbdvsp21recipeplannerserverjava.jwt.JwtSecretKey;
+import com.example.wbdvsp21recipeplannerserverjava.models.User;
 import com.example.wbdvsp21recipeplannerserverjava.security.ApiResponse;
 import com.example.wbdvsp21recipeplannerserverjava.services.ApplicationUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,8 +56,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             //
             UserDetails userDetail = userService.loadUserByUsername(authenticationRequest.getEmail());
 
-            System.out.println(authenticationRequest.getEmail());
-            System.out.println(authenticationRequest.getPassword());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     userDetail, //principal
@@ -92,15 +91,11 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
 
 
-
-//        HashMap<String, String> result = new HashMap<String, String>();
-//        result.put("status", "200");
-//        result.put("Authorization", jwtConfig.getTokenPrefix() + token);
-//        result.put("userId", userService.findIdByEmail(userDetail.getEmail()).toString());
+        User user = userService.findUserByEmail(userDetail.getEmail()).get(0);
         UserAuthenticationResponse result = new UserAuthenticationResponse(200, jwtConfig.getTokenPrefix() + token,
-                userService.findIdByEmail(userDetail.getEmail()).toString(),
-                userService.findNameByEmail(userDetail.getEmail()),
-                "success");
+                user.getId().toString(),
+                user.getName(),
+                user.getRole(), "success");
 
 //        response.setContentType("application/json");
 //        response.setCharacterEncoding("utf-8");
@@ -117,7 +112,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                               AuthenticationException failed) throws IOException, ServletException {
 
         UserAuthenticationResponse result = new UserAuthenticationResponse(403,
-                "", "", "", "Invalid password");
+                "", "", "", "", "Invalid password");
 
 //        response.setContentType("application/json");
 //        response.setCharacterEncoding("utf-8");

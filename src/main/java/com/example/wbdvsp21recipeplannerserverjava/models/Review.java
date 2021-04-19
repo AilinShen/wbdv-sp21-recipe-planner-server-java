@@ -21,6 +21,7 @@ public class Review {
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
     }
+
     public String getUserName() {
         return userName;
     }
