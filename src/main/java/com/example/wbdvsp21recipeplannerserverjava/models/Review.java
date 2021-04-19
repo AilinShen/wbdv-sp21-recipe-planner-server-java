@@ -9,7 +9,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
     private Long userId;
-    private Long recipeId;
+    private String recipeId;
     private String text;
     private String userName;
     private String recipeName;
@@ -33,7 +33,7 @@ public class Review {
     public Review() {
     }
 
-    public Review(Long reviewId, Long userId, Long recipeId, String text) {
+    public Review(Long reviewId, Long userId, String recipeId, String text) {
         this.reviewId = reviewId;
         this.userId = userId;
         this.recipeId = recipeId;
@@ -56,11 +56,11 @@ public class Review {
         this.userId = userId;
     }
 
-    public Long getRecipeId() {
+    public String getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(Long recipeId) {
+    public void setRecipeId(String recipeId) {
         this.recipeId = recipeId;
     }
 
