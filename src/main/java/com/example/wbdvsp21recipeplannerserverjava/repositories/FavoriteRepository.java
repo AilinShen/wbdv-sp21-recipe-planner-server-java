@@ -17,5 +17,5 @@ public interface FavoriteRepository
     public List<UserFavorites> findFavoritesForUser(@Param("uid") Long userId);
 
     @Query(value = "SELECT * FROM user_favorites WHERE user_id=:uid and recipe_id=:rid", nativeQuery = true)
-    public UserFavorites findFavorites(@Param("uid") Long user_id, @Param("rid") Long recipe_id);
+    public UserFavorites findFavorites(@Param("uid") Long user_id, @Param("rid") String recipe_id);
 }
