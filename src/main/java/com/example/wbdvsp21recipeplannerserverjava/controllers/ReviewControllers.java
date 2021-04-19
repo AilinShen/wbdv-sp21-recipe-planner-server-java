@@ -20,7 +20,7 @@ public class ReviewControllers {
 
     @PostMapping("/api/recipes/{rid}/reviews")
     public Review createReview(
-            @PathVariable("rid") Long recipeId,
+            @PathVariable("rid") String recipeId,
             @RequestBody Review review
     ) {
         review.setRecipeId(recipeId);
@@ -36,7 +36,7 @@ public class ReviewControllers {
 
     @GetMapping("/api/recipes/{rid}/reviews")
     public List<Review> findReviewForRecipe(
-            @PathVariable("rid") Long recipeId
+            @PathVariable("rid") String recipeId
     ) {
         return service.findReviewForRecipe(recipeId);
     }

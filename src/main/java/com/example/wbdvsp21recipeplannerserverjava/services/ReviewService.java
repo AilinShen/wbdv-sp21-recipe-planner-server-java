@@ -17,6 +17,6 @@ public class ReviewService {
         return (List<Review>) repository.findAll();
 
     }
-    public List<Review> findReviewForRecipe(Long recipeId) { return repository.findReviewForRecipe(recipeId);}
+    public List<Review> findReviewForRecipe(String recipeId) { return repository.findReviewForRecipe(recipeId);}
     public List<Review> findReviewForUser(Long userId) { return repository.findReviewForUser(userId);}
 }
