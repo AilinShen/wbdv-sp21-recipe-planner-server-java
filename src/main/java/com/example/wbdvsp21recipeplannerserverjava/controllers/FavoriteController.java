@@ -21,7 +21,7 @@ public class FavoriteController {
 
     @PostMapping("/api/users/{uid}/recipe/{rid}/favorite")
     public UserFavorites createFavorite(
-            @PathVariable("rid") Long recipeId,
+            @PathVariable("rid") String recipeId,
             @PathVariable("uid") Long userId,
             @RequestBody UserFavorites fav
     ) {
@@ -40,7 +40,7 @@ public class FavoriteController {
     @GetMapping("/api/users/{uid}/recipe/{rid}/favorite")
     public UserFavorites findFavorites(
             @PathVariable("uid") Long userId,
-            @PathVariable("rid") Long recipeId
+            @PathVariable("rid") String recipeId
     ) {
         return service.findFavorites(userId, recipeId);
     }
