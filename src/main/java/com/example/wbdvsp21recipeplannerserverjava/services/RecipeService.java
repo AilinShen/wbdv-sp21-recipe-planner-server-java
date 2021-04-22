@@ -17,10 +17,14 @@ public class RecipeService {
     @Autowired
     RecipeRepository repository;
 
-    @Autowired
-    RecipeIngredientRepository ingredientsRepository;
+    RecipeIngredientService ingredientService;
 
     public Recipe createRecipe(Recipe recipe){
+        System.out.println(recipe.getIngredientList().size());
+        for(RecipeIngredient r: recipe.getIngredientList()){
+            System.out.println(r.toString());
+            ingredientService.createRecipeIngredient(recipe.getId(),r);
+        }
         return repository.save(recipe);
     }
 
@@ -29,6 +33,10 @@ public class RecipeService {
     }
 
     public void deleteRecipeById(String id) {
+        Recipe recipe = findRecipeById(id);
+        for(RecipeIngredient r: recipe.getIngredientList()){
+            ingredientService.deleteRecipeIngredientById(r.getId());
+        }
         repository.deleteById(id);
     }
 
@@ -52,16 +60,6 @@ public class RecipeService {
     }
 
     public List<Recipe> findRecipesForUser(Integer userId){
-        List<Recipe> recipes = repository.findRecipeForUser(userId);
-        for (int i = 0; i < recipes.size(); i++) {
-            Recipe r = recipes.get(i);
-            List<RecipeIngredient> ingredients = ingredientsRepository.findIngredientsForRecipe(r.getId());
-            ArrayList<String> ingredString = new ArrayList<>();
-            for (int y = 0; y < ingredients.size(); y++) {
-                ingredString.add(ingredients.get(y).toString());
-            }
-            r.setIngredients(ingredString.toString());
-        }
-        return recipes;
+        return repository.findRecipeForUser(userId);
     }
 }

@@ -14,6 +14,8 @@ public class Recipe {
     private Integer userId;
     private String title;
     private String ingredients;
+    @OneToMany(targetEntity = RecipeIngredient.class)
+    private List<RecipeIngredient> ingredientList;
     private String directions;
     private Integer score;
     private String image;
@@ -25,11 +27,10 @@ public class Recipe {
         setRecipeUniqueId();
     }
 
-    public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String image, Integer readyInMinutes) {
+    public Recipe(Integer userId, String title, String directions, Integer score, String image, Integer readyInMinutes) {
         setRecipeUniqueId();
         this.userId = userId;
         this.title = title;
-        this.ingredients = ingredients;
         this.directions = directions;
         this.score = score;
         this.image = image;
@@ -66,12 +67,24 @@ public class Recipe {
         this.title = title;
     }
 
+    public List<RecipeIngredient> getIngredientList() {
+        return ingredientList;
+    }
+
     public String getIngredients() {
         return ingredients;
     }
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public void setIngredients(List<RecipeIngredient> ingredientList) {
+        this.ingredientList = ingredientList;
+    }
+
+    public void addIngredient(RecipeIngredient ingredient){
+        this.ingredientList.add(ingredient);
     }
 
     public String getDirections() {

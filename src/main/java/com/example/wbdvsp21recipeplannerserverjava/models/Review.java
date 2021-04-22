@@ -8,11 +8,11 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
-    private Long userId;
-    private Long recipeId;
+    private String recipeId;
     private String text;
-    private String userName;
     private String recipeName;
+    @ManyToOne(targetEntity = User.class)
+    private User reviewUser;
 
     public String getRecipeName() {
         return recipeName;
@@ -21,21 +21,13 @@ public class Review {
     public void setRecipeName(String recipeName) {
         this.recipeName = recipeName;
     }
-  
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public Review() {
     }
 
-    public Review(Long reviewId, Long userId, Long recipeId, String text) {
+    public Review(Long reviewId, User user, String recipeId, String text) {
         this.reviewId = reviewId;
-        this.userId = userId;
+        this.reviewUser = user;
         this.recipeId = recipeId;
         this.text = text;
     }
@@ -48,19 +40,19 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return reviewUser;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.reviewUser = user;
     }
 
-    public Long getRecipeId() {
+    public String getRecipeId() {
         return recipeId;
     }
 
-    public void setRecipeId(Long recipeId) {
+    public void setRecipeId(String recipeId) {
         this.recipeId = recipeId;
     }
 

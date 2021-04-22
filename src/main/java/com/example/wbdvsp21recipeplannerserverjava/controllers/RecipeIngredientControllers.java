@@ -23,14 +23,14 @@ public class RecipeIngredientControllers {
 
     @DeleteMapping("/api/ingredients/{id}")
     public void deleteIngredient(
-            @PathVariable("id") String id
+            @PathVariable("id") Integer id
     ){
         service.deleteRecipeIngredientById(id);
     }
 
     @PutMapping("/api/ingredients/{id}")
     public Integer updateIngredient(
-            @PathVariable("id") String id,
+            @PathVariable("id") Integer id,
             @RequestBody RecipeIngredient r
     ){
        return service.updateRecipeIngredient(id, r);
@@ -38,7 +38,7 @@ public class RecipeIngredientControllers {
 
     @GetMapping("/api/ingredients/{id}")
     public RecipeIngredient findIngredientById(
-            @PathVariable("id") String id
+            @PathVariable("id") Integer id
     ){
         return service.findRecipeIngredientById(id);
     }
