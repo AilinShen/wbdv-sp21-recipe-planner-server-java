@@ -44,6 +44,9 @@ public class RecipeService {
         if (repository.existsById(recipeId)){
             newRecipe.setId(recipeId);
             System.out.println(newRecipe.getId());
+            for(RecipeIngredient r: newRecipe.getIngredientList()){
+                ingredientService.updateRecipeIngredient(r.getId(), r);
+            }
             repository.save(newRecipe);
             return 1;
         }else {
