@@ -12,6 +12,6 @@ extends CrudRepository<Review, Long>{
     @Query(value="SELECT * FROM reviews where recipe_id=:rid", nativeQuery = true)
     public List<Review> findReviewForRecipe(@Param("rid") String recipeId);
 
-    @Query(value="SELECT * FROM reviews WHERE user_id=:uid", nativeQuery = true)
+    @Query(value="SELECT * FROM reviews WHERE review_user_id=:uid", nativeQuery = true)
     public List<Review> findReviewForUser(@Param("uid") Long userId);
 }
