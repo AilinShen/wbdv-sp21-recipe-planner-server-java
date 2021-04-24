@@ -20,9 +20,7 @@ public class RecipeService {
     RecipeIngredientService ingredientService;
 
     public Recipe createRecipe(Recipe recipe){
-        System.out.println(recipe.getIngredientList().size());
-        for(RecipeIngredient r: recipe.getIngredientList()){
-            System.out.println(r.toString());
+        for(RecipeIngredient r: recipe.getExtendedIngredients()){
             ingredientService.createRecipeIngredient(recipe.getId(),r);
         }
         return repository.save(recipe);
@@ -34,7 +32,7 @@ public class RecipeService {
 
     public void deleteRecipeById(String id) {
         Recipe recipe = findRecipeById(id);
-        for(RecipeIngredient r: recipe.getIngredientList()){
+        for(RecipeIngredient r: recipe.getExtendedIngredients()){
             ingredientService.deleteRecipeIngredientById(r.getId());
         }
         repository.deleteById(id);
@@ -43,8 +41,7 @@ public class RecipeService {
     public Integer updateRecipe(String recipeId, Recipe newRecipe){
         if (repository.existsById(recipeId)){
             newRecipe.setId(recipeId);
-            System.out.println(newRecipe.getId());
-            for(RecipeIngredient r: newRecipe.getIngredientList()){
+            for(RecipeIngredient r: newRecipe.getExtendedIngredients()){
                 ingredientService.updateRecipeIngredient(r.getId(), r);
             }
             repository.save(newRecipe);
@@ -60,6 +57,14 @@ public class RecipeService {
         }catch (NoSuchElementException e){
             return null;
         }
+    }
+
+    public List<Recipe> findRecipeById(List<String> ids){
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        for (String id: ids) {
+            recipes.add(findRecipeById(id));
+        }
+        return recipes;
     }
 
     public List<Recipe> findRecipesForUser(Integer userId){
