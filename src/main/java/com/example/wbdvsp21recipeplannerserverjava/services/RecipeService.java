@@ -22,11 +22,11 @@ public class RecipeService {
 
     public Recipe createRecipe(Recipe recipe){
         List<RecipeIngredient> ingredientList = new ArrayList<RecipeIngredient>();
-        for(RecipeIngredient r: recipe.getIngredientList()){
+        for(RecipeIngredient r: recipe.getExtendedIngredients()){
             RecipeIngredient ingredient = ingredientService.createRecipeIngredient(recipe.getId(),r);
             ingredientList.add(ingredient);
         }
-        recipe.setIngredients(ingredientList);
+        recipe.setExtendedIngredients(ingredientList);
         return repository.save(recipe);
     }
 
@@ -45,7 +45,7 @@ public class RecipeService {
     public Integer updateRecipe(String recipeId, Recipe newRecipe){
         if (repository.existsById(recipeId)){
             newRecipe.setId(recipeId);
-            for(RecipeIngredient r: newRecipe.getIngredientList()){
+            for(RecipeIngredient r: newRecipe.getExtendedIngredients()){
                 if (r.getId()!=null){
                     ingredientService.updateRecipeIngredient(r.getId(), r);
                 }else {
