@@ -40,6 +40,7 @@ public class RecipeIngredientService {
         try {
             Recipe recipe = recipeService.findRecipeById(recipeId);
             r.setRecipeId(recipeId);
+            recipe.addIngredient(r);
             return repository.save(r);
         }catch (NoSuchElementException e){
             return null;
@@ -48,7 +49,7 @@ public class RecipeIngredientService {
 
     public RecipeIngredient findRecipeIngredientById(Integer id){
         try {
-            return (RecipeIngredient) repository.findById(id).get();
+            return repository.findById(id).get();
         }catch (NoSuchElementException e){
             return null;
         }

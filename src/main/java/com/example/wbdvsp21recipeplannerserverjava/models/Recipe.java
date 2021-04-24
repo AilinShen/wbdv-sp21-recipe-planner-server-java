@@ -9,17 +9,14 @@ import java.util.UUID;
 public class Recipe {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private Integer userId;
     private String title;
-    private String ingredients;
-    @OneToMany(targetEntity = RecipeIngredient.class)
-    private List<RecipeIngredient> ingredientList;
     private String directions;
-    private Integer score;
     private String image;
     private Integer readyInMinutes;
+    @OneToMany(targetEntity = RecipeIngredient.class)
+    private List<RecipeIngredient> extendedIngredients;
 
 
 
@@ -27,12 +24,11 @@ public class Recipe {
         setRecipeUniqueId();
     }
 
-    public Recipe(Integer userId, String title, String directions, Integer score, String image, Integer readyInMinutes) {
+    public Recipe(Integer userId, String title, String directions, String image, Integer readyInMinutes) {
         setRecipeUniqueId();
         this.userId = userId;
         this.title = title;
         this.directions = directions;
-        this.score = score;
         this.image = image;
         this.readyInMinutes = readyInMinutes;
     }
@@ -67,24 +63,16 @@ public class Recipe {
         this.title = title;
     }
 
-    public List<RecipeIngredient> getIngredientList() {
-        return ingredientList;
+    public List<RecipeIngredient> getExtendedIngredients() {
+        return extendedIngredients;
     }
 
-    public String getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public void setIngredients(List<RecipeIngredient> ingredientList) {
-        this.ingredientList = ingredientList;
+    public void setExtendedIngredients(List<RecipeIngredient> ingredientList) {
+        this.extendedIngredients = ingredientList;
     }
 
     public void addIngredient(RecipeIngredient ingredient){
-        this.ingredientList.add(ingredient);
+        this.extendedIngredients.add(ingredient);
     }
 
     public String getDirections() {
@@ -93,14 +81,6 @@ public class Recipe {
 
     public void setDirections(String directions) {
         this.directions = directions;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 
     public String getImage() {

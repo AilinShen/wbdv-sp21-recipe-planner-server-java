@@ -56,6 +56,12 @@ public class RecipeControllers {
         return service.findRecipeById(id);
     }
 
+    @GetMapping("/api/recipes/bulk/{ids}")
+    public List<Recipe> findRecipes(
+            @PathVariable("ids") List<String> ids){
+        return service.findRecipeById(ids);
+    }
+
     @GetMapping("/api/users/{uid}/recipes")
     public List<Recipe> findRecipeForUser(
             @PathVariable("uid") Integer userId
