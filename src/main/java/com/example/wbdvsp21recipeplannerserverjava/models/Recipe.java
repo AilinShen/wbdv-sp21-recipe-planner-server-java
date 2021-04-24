@@ -9,15 +9,14 @@ import java.util.UUID;
 public class Recipe {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private Integer userId;
     private String title;
-    private String ingredients;
     private String directions;
-    private Integer score;
     private String image;
     private Integer readyInMinutes;
+    @OneToMany(targetEntity = RecipeIngredient.class)
+    private List<RecipeIngredient> extendedIngredients;
 
 
 
@@ -25,13 +24,11 @@ public class Recipe {
         setRecipeUniqueId();
     }
 
-    public Recipe(Integer userId, String title, String ingredients, String directions, Integer score, String image, Integer readyInMinutes) {
+    public Recipe(Integer userId, String title, String directions, String image, Integer readyInMinutes) {
         setRecipeUniqueId();
         this.userId = userId;
         this.title = title;
-        this.ingredients = ingredients;
         this.directions = directions;
-        this.score = score;
         this.image = image;
         this.readyInMinutes = readyInMinutes;
     }
@@ -66,12 +63,16 @@ public class Recipe {
         this.title = title;
     }
 
-    public String getIngredients() {
-        return ingredients;
+    public List<RecipeIngredient> getExtendedIngredients() {
+        return extendedIngredients;
     }
 
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
+    public void setExtendedIngredients(List<RecipeIngredient> ingredientList) {
+        this.extendedIngredients = ingredientList;
+    }
+
+    public void addIngredient(RecipeIngredient ingredient){
+        this.extendedIngredients.add(ingredient);
     }
 
     public String getDirections() {
@@ -80,14 +81,6 @@ public class Recipe {
 
     public void setDirections(String directions) {
         this.directions = directions;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 
     public String getImage() {

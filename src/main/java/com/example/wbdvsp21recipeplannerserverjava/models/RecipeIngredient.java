@@ -1,8 +1,5 @@
 package com.example.wbdvsp21recipeplannerserverjava.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-
 import javax.persistence.*;
 
 @Entity

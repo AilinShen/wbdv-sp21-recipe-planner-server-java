@@ -18,9 +18,15 @@ public class RecipeService {
     RecipeRepository repository;
 
     @Autowired
-    RecipeIngredientRepository ingredientsRepository;
+    RecipeIngredientService ingredientService;
 
     public Recipe createRecipe(Recipe recipe){
+        List<RecipeIngredient> ingredientList = new ArrayList<RecipeIngredient>();
+        for(RecipeIngredient r: recipe.getIngredientList()){
+            RecipeIngredient ingredient = ingredientService.createRecipeIngredient(recipe.getId(),r);
+            ingredientList.add(ingredient);
+        }
+        recipe.setIngredients(ingredientList);
         return repository.save(recipe);
     }
 
@@ -29,13 +35,23 @@ public class RecipeService {
     }
 
     public void deleteRecipeById(String id) {
+        Recipe recipe = findRecipeById(id);
+        for(RecipeIngredient r: recipe.getExtendedIngredients()){
+            ingredientService.deleteRecipeIngredientById(r.getId());
+        }
         repository.deleteById(id);
     }
 
     public Integer updateRecipe(String recipeId, Recipe newRecipe){
         if (repository.existsById(recipeId)){
             newRecipe.setId(recipeId);
-            System.out.println(newRecipe.getId());
+            for(RecipeIngredient r: newRecipe.getIngredientList()){
+                if (r.getId()!=null){
+                    ingredientService.updateRecipeIngredient(r.getId(), r);
+                }else {
+                    ingredientService.createRecipeIngredient(recipeId, r);
+                }
+            }
             repository.save(newRecipe);
             return 1;
         }else {
@@ -51,17 +67,15 @@ public class RecipeService {
         }
     }
 
-    public List<Recipe> findRecipesForUser(Integer userId){
-        List<Recipe> recipes = repository.findRecipeForUser(userId);
-        for (int i = 0; i < recipes.size(); i++) {
-            Recipe r = recipes.get(i);
-            List<RecipeIngredient> ingredients = ingredientsRepository.findIngredientsForRecipe(r.getId());
-            ArrayList<String> ingredString = new ArrayList<>();
-            for (int y = 0; y < ingredients.size(); y++) {
-                ingredString.add(ingredients.get(y).toString());
-            }
-            r.setIngredients(ingredString.toString());
+    public List<Recipe> findRecipeById(List<String> ids){
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        for (String id: ids) {
+            recipes.add(findRecipeById(id));
         }
         return recipes;
+    }
+
+    public List<Recipe> findRecipesForUser(Integer userId){
+        return repository.findRecipeForUser(userId);
     }
 }

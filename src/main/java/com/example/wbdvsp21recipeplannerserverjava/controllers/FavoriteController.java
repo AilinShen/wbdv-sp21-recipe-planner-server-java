@@ -49,4 +49,12 @@ public class FavoriteController {
     public Integer deleteFavorites(@PathVariable("fId") Long Id) {
         return service.deleteFavorites(Id);
     }
+
+    @DeleteMapping("/api/users/{uid}/recipe/{rid}/favorite")
+    public UserFavorites deleteRecipeFavoriteForUser(
+            @PathVariable("uid") Long userId,
+            @PathVariable("rid") String recipeId
+    ){
+        return service.deleteRecipeFavoriteForUser(userId, recipeId);
+    }
 }

@@ -22,13 +22,13 @@ public class RecipeIngredientService {
         return (List<RecipeIngredient>) repository.findAll();
     }
 
-    public void deleteRecipeIngredientById(String id){
-        repository.deleteById(Integer.parseInt(id));
+    public void deleteRecipeIngredientById(Integer id){
+        repository.deleteById(id);
     }
 
-    public Integer updateRecipeIngredient(String id, RecipeIngredient newRecipeIngredient){
-        if(repository.existsById(Integer.parseInt(id))){
-            newRecipeIngredient.setId(Integer.parseInt(id));
+    public Integer updateRecipeIngredient(Integer id, RecipeIngredient newRecipeIngredient){
+        if(repository.existsById(id)){
+            newRecipeIngredient.setId(id);
             repository.save(newRecipeIngredient);
             return 1;
         }else {
@@ -40,17 +40,16 @@ public class RecipeIngredientService {
         try {
             Recipe recipe = recipeService.findRecipeById(recipeId);
             r.setRecipeId(recipeId);
-
-            System.out.println(r);
+            recipe.addIngredient(r);
             return repository.save(r);
         }catch (NoSuchElementException e){
             return null;
         }
     }
 
-    public RecipeIngredient findRecipeIngredientById(String id){
+    public RecipeIngredient findRecipeIngredientById(Integer id){
         try {
-            return (RecipeIngredient) repository.findById(Integer.parseInt(id)).get();
+            return repository.findById(id).get();
         }catch (NoSuchElementException e){
             return null;
         }
