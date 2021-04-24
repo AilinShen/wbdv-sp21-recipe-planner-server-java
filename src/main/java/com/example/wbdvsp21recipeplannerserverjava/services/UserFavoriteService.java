@@ -33,4 +33,10 @@ public class UserFavoriteService {
         repository.deleteById(Id);
         return 1;
     }
+
+    public UserFavorites deleteRecipeFavoriteForUser(Long userId, String recipeId){
+        UserFavorites f = this.findFavorites(userId, recipeId);
+        repository.deleteById(f.getId());
+        return f;
+    }
 }

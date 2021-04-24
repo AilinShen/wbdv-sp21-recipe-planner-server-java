@@ -17,14 +17,17 @@ public class RecipeService {
     @Autowired
     RecipeRepository repository;
 
+    @Autowired
     RecipeIngredientService ingredientService;
 
     public Recipe createRecipe(Recipe recipe){
-        System.out.println(recipe.getIngredientList().size());
+        List<RecipeIngredient> ingredientList = new ArrayList<RecipeIngredient>();
         for(RecipeIngredient r: recipe.getIngredientList()){
-            System.out.println(r.toString());
-            ingredientService.createRecipeIngredient(recipe.getId(),r);
+            RecipeIngredient ingredient = ingredientService.createRecipeIngredient(recipe.getId(),r);
+            ingredientList.add(ingredient);
         }
+        System.out.println(recipe.getIngredientList());
+        recipe.setIngredients(ingredientList);
         return repository.save(recipe);
     }
 
@@ -43,9 +46,12 @@ public class RecipeService {
     public Integer updateRecipe(String recipeId, Recipe newRecipe){
         if (repository.existsById(recipeId)){
             newRecipe.setId(recipeId);
-            System.out.println(newRecipe.getId());
             for(RecipeIngredient r: newRecipe.getIngredientList()){
-                ingredientService.updateRecipeIngredient(r.getId(), r);
+                if (r.getId()!=null){
+                    ingredientService.updateRecipeIngredient(r.getId(), r);
+                }else {
+                    ingredientService.createRecipeIngredient(recipeId, r);
+                }
             }
             repository.save(newRecipe);
             return 1;

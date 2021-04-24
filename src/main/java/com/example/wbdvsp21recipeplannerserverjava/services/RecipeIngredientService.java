@@ -40,8 +40,6 @@ public class RecipeIngredientService {
         try {
             Recipe recipe = recipeService.findRecipeById(recipeId);
             r.setRecipeId(recipeId);
-            recipe.addIngredient(r);
-            System.out.println(r);
             return repository.save(r);
         }catch (NoSuchElementException e){
             return null;
