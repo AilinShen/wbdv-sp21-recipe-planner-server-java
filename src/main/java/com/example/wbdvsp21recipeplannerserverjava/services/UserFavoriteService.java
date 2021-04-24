@@ -26,7 +26,7 @@ public class UserFavoriteService {
         if(test != null){
             return test;
         }else{
-            return new UserFavorites(-1L,-1L, "");
+            return new UserFavorites(-1L,-1L, "-1");
         }
     }
     public Integer deleteFavorites(Long Id) {
