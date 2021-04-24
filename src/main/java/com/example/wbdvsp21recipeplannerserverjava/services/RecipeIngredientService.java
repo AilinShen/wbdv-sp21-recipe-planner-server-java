@@ -38,9 +38,7 @@ public class RecipeIngredientService {
 
     public RecipeIngredient createRecipeIngredient(String recipeId, RecipeIngredient r){
         try {
-            Recipe recipe = recipeService.findRecipeById(recipeId);
             r.setRecipeId(recipeId);
-            recipe.addIngredient(r);
             return repository.save(r);
         }catch (NoSuchElementException e){
             return null;

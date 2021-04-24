@@ -35,10 +35,6 @@ public class RecipeService {
     }
 
     public void deleteRecipeById(String id) {
-        Recipe recipe = findRecipeById(id);
-        for(RecipeIngredient r: recipe.getExtendedIngredients()){
-            ingredientService.deleteRecipeIngredientById(r.getId());
-        }
         repository.deleteById(id);
     }
 

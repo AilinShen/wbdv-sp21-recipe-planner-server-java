@@ -15,7 +15,7 @@ public class Recipe {
     private String directions;
     private String image;
     private Integer readyInMinutes;
-    @OneToMany(targetEntity = RecipeIngredient.class)
+    @OneToMany(targetEntity = RecipeIngredient.class, cascade = CascadeType.DETACH)
     private List<RecipeIngredient> extendedIngredients;
 
 
