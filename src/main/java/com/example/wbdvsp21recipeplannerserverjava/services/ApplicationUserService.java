@@ -66,13 +66,12 @@ public class ApplicationUserService implements UserDetailsService {
 
 
 
-    public Integer updateUser(Integer id, User newUser){
+    public User updateUser(Integer id, User newUser){
         if (userRepository.existsById(id)){
             newUser.setId(id);
-            userRepository.save(newUser);
-            return 1;
+            return userRepository.save(newUser);
         }else {
-            return -1;
+            return null;
         }
     }
 

@@ -21,11 +21,11 @@ public class User {
         this.role = role;
     }
 
-    public User(Integer id, String email, String name, String password) {
+    public User(Integer id, String email, String name, String role) {
         this.id = id;
         this.email = email;
         this.name = name;
-        this.password = password;
+        this.role = role;
     }
 
     public User(String username, String password) {

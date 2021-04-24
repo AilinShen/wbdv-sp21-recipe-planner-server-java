@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,12 +23,18 @@ public class UserControllers {
 
     @GetMapping("/api/users")
     public List<User> findAllUsers(){
-        return userService.findAllUsers();
+        List<User> users = userService.findAllUsers();
+        ArrayList<User> results = new ArrayList<>();
+        for(User user: users){
+            results.add(new User(user.getId(), user.getEmail(), user.getName(), user.getRole()));
+        }
+        return results;
     }
 
     @GetMapping("/api/users/{uid}")
     public User findUserById( @PathVariable("uid") Integer id){
-        return userService.findUserById(id);
+        User user = userService.findUserById(id);
+        return new User(user.getId(), user.getEmail(), user.getName(), user.getRole());
     }
 
     @GetMapping("/shopper")
@@ -60,11 +67,16 @@ public class UserControllers {
     }
 
     @PutMapping("/api/users/{uid}")
-    public Integer updateUser(
+    public User updateUser(
             @PathVariable("uid") Integer id,
             @RequestBody User newUser
     ){
-        return userService.updateUser(id, newUser);
+        if(newUser.getPassword() != null) {
+            String encodedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
+            newUser.setPassword(encodedPassword);
+        }
+        User user = userService.updateUser(id, newUser);
+        return new User(user.getId(), user.getEmail(), user.getName(), user.getRole());
     }
 
     @DeleteMapping("/api/users/{uid}")
