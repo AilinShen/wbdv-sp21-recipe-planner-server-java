@@ -8,22 +8,33 @@ public class UserAuthenticationResponse {
     private String message;
     private String username;
     private String role;
+    private String email;
 
-    public UserAuthenticationResponse(int status, String authorization, String userId, String name, String role) {
+    public UserAuthenticationResponse(int status, String authorization, String email, String userId, String name, String role) {
         this.status = status;
         this.authorization = authorization;
+        this.email = email;
         this.userId = userId;
         this.username = name;
         this.role = role;
     }
 
-    public UserAuthenticationResponse(int status, String authorization, String userId, String name, String role, String message) {
+    public UserAuthenticationResponse(int status, String authorization, String email, String userId, String name, String role, String message) {
         this.status = status;
         this.authorization = authorization;
+        this.email = email;
         this.userId = userId;
         this.username = name;
         this.role =role;
         this.message = message;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getRole() {
