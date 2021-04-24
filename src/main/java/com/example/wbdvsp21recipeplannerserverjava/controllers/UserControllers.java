@@ -71,8 +71,10 @@ public class UserControllers {
             @PathVariable("uid") Integer id,
             @RequestBody User newUser
     ){
-        String encodedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(encodedPassword);
+        if(newUser.getPassword() != null) {
+            String encodedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
+            newUser.setPassword(encodedPassword);
+        }
         User user = userService.updateUser(id, newUser);
         return new User(user.getId(), user.getEmail(), user.getName(), user.getRole());
     }
