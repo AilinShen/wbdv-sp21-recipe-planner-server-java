@@ -74,6 +74,10 @@ public class UserControllers {
         if(newUser.getPassword() != null) {
             String encodedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
             newUser.setPassword(encodedPassword);
+        } else {
+            User origin = userService.findUserById(id);
+            newUser.setPassword(origin.getPassword());
+            System.out.println(newUser.getPassword());
         }
         User user = userService.updateUser(id, newUser);
         return new User(user.getId(), user.getEmail(), user.getName(), user.getRole());
